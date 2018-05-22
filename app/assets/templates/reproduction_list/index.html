@@ -7,7 +7,7 @@
 
     <style type="text/css">
       .scale-video {
-        width: 100%;
+        width: 100vw;
         position: relative;
         padding-bottom: 56.25%; /*16:9*/
         padding-top: 0;
@@ -19,21 +19,21 @@
         position: absolute;
         top: 0;
         left: 0;
-        width: 100%;
-        height: 100%;
+        width: 100vw;
+        height: 100vh;
       }
     </style>
   </head>
   <body>
     <div ng-app="AnunciosVideos" ng-controller="PrincipalCtrl">
-      <div class="flex-row flex-direction-row flex-nowrap">
-        <div class="sc-bg-green-dark fcol-order-xs-1 flex-nowrap" style="flex:0 0 84.38%; max-width: 84.38%; max-height:100%; height: 100%;">
-          <video id=video autoplay="autoplay" onended="angular.element(this).scope().anuncioVideo.getPlaylist(this)" controls style="max-height: 80%; height: 80%; width: 100%">
+      <div class="flex-row">
+        <div class="flex-row sc-bg-green-dark fcol-order-xs-1 flex-direction-row flex-nowrap" style="flex:0 0 80VW; height: 80vh;">
+          <video id=video autoplay="autoplay" onended="angular.element(this).scope().anuncioVideo.getPlaylist(this)" controls style="height: 80vh; width: 80vw">
             <source src="http://localhost:3001/video?id={{anuncioVideo.index}}" type="video/mp4">
           </video>
-          <div class="sc-bg-yellow-light fcol-order-xs-2" style="max-height: 20%; height: 20%">MENSAGEM</div>
+          <div class="sc-bg-blue-light fcol-order-xs-2" style="flex:0 0 20VW; height: 80vh">ANUNCIO</div>
         </div>
-        <div class="sc-bg-blue-light fcol-order-xs-2" style="flex:0 0 15.62%; max-width: 15.62%; max-height: 100%; height: 100%">ANUNCIO</div>
+       <div class="sc-bg-yellow-light fcol-order-xs-2" style="width:100vw; height: 20vh">MENSAGEM</div>
       </div>
     </div>
   </body>
