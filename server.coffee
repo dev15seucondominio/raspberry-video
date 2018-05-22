@@ -3,4 +3,4 @@ require('./env')
 
 # servers
 console.log('STARTING SERVERS...')
-require('./app/anuncios-videos')()
+require('./anuncios-videos')()

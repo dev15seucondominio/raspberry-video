@@ -19,18 +19,29 @@ Prerequisitos:
 Next Steps:
 	-mostrar as imagems com o memsmo tempo de duração dos vídeos
 	-relacionar os videos com as imagens para ter controle simultaneo de ambos
-	-configurar a lista de repetiçaõ dos videos
 	-pensar em um modelo básico para obter os dados do condominio, como logo, telefone etc..
-	-manipular os videos para parar, continuar, adiantar e retroceder o video, pular para o próximo etc..
+
+coisas a serem instaladas
+sudo npm install -g coffee-script
+sudo npm install -g node-env-file
+sudo npm install -g request
 
 
-coffee server.coffee
-ja ir testando a logica de negocio caso a quantiade de videos seja superior a
-quantide de video a ser passado, este é resetado, o video fica no cach do
-navegador logo ele não precisa realizar outra requisição para o obter os videos,
-apenas atualiza a lista e a manda para o front o front fica por conta de
-analizar a ordem dos videos e como tratar os casos quando o video ainda está
-sendo reproduzido com tudo todos os videos devem ser apresentados depois de
-realizar testes com os videos, começar a trabalhar com imagems e videos para
-sincronizar os mesmos a fins de evitar dores de cabeça em um futuro próximo
+https://elinux.org/RPiconfig#Video_mode_options
+Modos de Resolução monitor:
+Group CEA
+  mode 1: 640x480 60Hz, 4:3 clock:25MHz progressive
+  mode 2: 720x480 60Hz, 4:3 clock:27MHz progressive
+  mode 3: 720x480 60Hz, 16:9 clock:27MHz progressive
+  mode 4: 1280x720 60Hz, 16:9 clock:74MHz progressive
+  mode 16: 1920x1080 60Hz, 16:9 clock:148MHz progressive
 
+
+GROUP DMT
+  mode 4: 640x480 60Hz, 4:3 clock:25MHz progressive
+  mode 9: 800x600 60Hz, 4:3 clock:40MHz progressive
+  mode 16: 1024x768 60Hz, 4:3 clock:65MHz progressive
+  mode 81: 1366x768 60Hz, 16:9 clock:85MHz progressive
+
+CLIENTE_ID=1; TV_ID=1; npm run config_tv
+sudo bash -c 'echo -e "CLIENTE_ID=$CLIENTE_ID\nTV_ID=$TV_ID\n" > /etc/environment'; source /etc/environment
