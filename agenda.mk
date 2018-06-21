@@ -25,6 +25,9 @@ coisas a serem instaladas
 sudo npm install -g coffee-script
 sudo npm install -g node-env-file
 sudo npm install -g request
+sudo npm install -g express
+sudo npm install -g moment
+sudo npm install -g nodemon
 
 
 https://elinux.org/RPiconfig#Video_mode_options

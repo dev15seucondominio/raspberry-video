@@ -3,7 +3,7 @@
 ############# HOW TO USE ###############
 
 request = require('request')
-
+moment = require('moment')
 # express (like rails)
 express = require 'express'
 module.exports = (opt={}) ->
@@ -12,6 +12,11 @@ module.exports = (opt={}) ->
   # file_url = 'https://s3.amazonaws.com/rodrigo-erp/videos-exemplos-midia-indoor/Software+Seu+Condom%C3%ADnio-+Sistema+de+Administra%C3%A7%C3%A3o+Condominial+-+Aplicativo+de+Gest%C3%A3o+para+S%C3%ADndico.mp4';
 
   VIDEO_ID = 0
+
+  CLIENTE_ID = 46
+  TV_ID = 3
+
+  listMensagems = []
 
   download_file_httpget = (file_url)->
     options =
@@ -79,6 +84,41 @@ module.exports = (opt={}) ->
   app.get '/app.js', (req, res) ->
     res.sendFile(__dirname + '/app/assets/templates/reproduction_list/app.js')
 
+
+  app.get '/messages', (req, res) ->
+    dateFormat = moment().month()+1
+    dateFormat = '0'+dateFormat if dateFormat.length <2
+    dateFormat = dateFormat + '-' +moment().year()
+
+    request("http://staging.seucondominio.com.br/gerenciar/cd/#{ENV.CLIENTE_ID}/#{dateFormat}/midia_indoor.json?cliente=#{ENV.CLIENTE_ID}&midia_indoor_tv=#{ENV.TV_ID}", (error, response, body)->
+      if body[0] == '{'
+        json = JSON.parse(body)
+        listMensagems = json.list
+      else console.log '---------Error to Request-----------'
+
+      params =
+        index: 0
+        message:
+          tempo: 1000
+          titulo: 'Titutlo'
+          mensagem: 'quaisii'
+          tipo_tempo: 'segundos'
+
+      if listMensagems.length != 0
+        index = parseInt(req.query.index)
+        index = 0 if index > listMensagems.length-1
+        params.message = listMensagems[index]
+
+        params.message.tempo = switch params.message.tipo_tempo
+                               when 'horas' then params.message.tempo*60*60*1000
+                               when 'minutos' then params.message.tempo*60*1000
+                               when 'segundos' then params.message.tempo*1000
+
+        params.index = index+1
+      res.send JSON.stringify params
+    )
+
+
   app.get '/video', (req, res) ->
     VIDEO_ID = parseInt(req.query.id)
     console.log 'ID'
@@ -115,7 +155,6 @@ module.exports = (opt={}) ->
       res.writeHead 200, head
       fs.createReadStream(path).pipe res
       console.log('Terminou o Video')
-
 
   app.get '/playlist', (req, res) ->
     list_videos = fs.readdirSync 'downloads/videos/'
